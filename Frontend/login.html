@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - AFM Music Analytics</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login to AFM Music Analytics</h2>
+        
+        <div id="g_id_onload"
+             data-client_id="859750304042-itj88oliah9d4tdoak11u4bgiud94lvr.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rounded"
+             data-theme="outline"
+             data-size="large"
+             data-text="sign_in_with"
+             data-logo_alignment="left">
+        </div>
+    </div>
+
+    <script>
+        function handleCredentialResponse(response) {
+            // This token (JWT) contains the user's profile info encrypted by Google
+            const idToken = response.credential; 
+            
+            console.log("Encoded JWT ID token: " + idToken);
+
+            // Send this token to your backend to verify it and log the user in
+            fetch('http://localhost:5000/api/auth/google', { // Change to your actual backend URL/port
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ token: idToken })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    // Store user data locally if needed
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                    // Redirect to your main dashboard page
+                    window.location.href = "index.html"; 
+                } else {
+                    alert("Login failed!");
+                }
+            })
+            .catch(err => console.error("Error verifying token:", err));
+        }
+    </script>
+</body>
+</html>
