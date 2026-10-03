@@ -1,0 +1,10 @@
+body{margin:0;font-family:Montserrat,Arial,sans-serif;background:#121212;color:#fff}
+.login-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#181818;padding:36px;border-radius:14px;width:100%;max-width:400px;text-align:center}
+.login-box h1{margin:0 0 6px;font-size:26px} .login-box h2{margin:0 0 8px;font-size:16px;color:#1ed760}
+.login-box p{color:#b3b3b3;font-size:14px}
+.input-box{text-align:left;margin:14px 0} .input-box label{display:block;margin-bottom:6px;font-size:14px}
+.input-box input{width:100%;padding:11px;border-radius:8px;border:1px solid #333;background:#222;color:#fff;box-sizing:border-box}
+.login-btn{width:100%;padding:12px;border:0;border-radius:30px;background:#1ed760;color:#000;font-weight:700;cursor:pointer;margin-top:8px}
+.extra-links{margin-top:14px;font-size:14px} .extra-links a{color:#1ed760}
+hr{border:0;border-top:1px solid #333;margin:20px 0 10px} .g_id_signin{display:flex;justify-content:center}
