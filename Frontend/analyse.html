@@ -2,51 +2,84 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Music Analytics Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Insights - A.Fm</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-<h1>Music Analytics Dashboard</h1>
-<a href="index.html"><h3>Home Page</h3></a>
+<h1>Music Insights</h1>
+<p class="back"><a href="index.html">&larr; Back to player</a></p>
 
-<div class="stats">
-  <div class="stat-card"><p>Total Songs</p><h2 id="totalSongs"></h2></div>
-  <div class="stat-card"><p>Top Artist</p><h2 id="topArtist"></h2></div>
-  <div class="stat-card"><p>Avg Popularity</p><h2 id="avgPop"></h2></div>
-  <div class="stat-card"><p>Explicit Songs</p><h2 id="explicitCount"></h2></div>
+<div class="tabs">
+  <button class="on" data-tab="overview">Overview</button>
+  <button data-tab="listening">My Listening</button>
+  <button data-tab="predict">What Makes a Hit</button>
+  <button data-tab="recommend">Recommender</button>
 </div>
 
-<div class="dashboard">
-
-  <div class="card">
-    <h2>Most Played Songs</h2>
-    <canvas id="songChart"></canvas>
+<!-- 1. OVERVIEW: describes the music dataset (data.json) -->
+<section class="tab" id="tab-overview">
+  <p class="intro">What is in the music dataset: who is on top, how popular songs are, and how that changed over the years.</p>
+  <div class="stats">
+    <div class="stat-card"><p>Songs in dataset</p><h2 id="totalSongs">-</h2></div>
+    <div class="stat-card"><p>Top artist</p><h2 id="topArtist">-</h2></div>
+    <div class="stat-card"><p>Avg popularity</p><h2 id="avgPop">-</h2></div>
+    <div class="stat-card"><p>Explicit songs</p><h2 id="explicitCount">-</h2></div>
   </div>
-
-  <div class="card">
-    <h2>Popularity Distribution</h2>
-    <canvas id="popChart"></canvas>
+  <div class="dashboard">
+    <div class="card"><h2>Top songs by popularity</h2><canvas id="songChart"></canvas></div>
+    <div class="card"><h2>Popularity distribution</h2><canvas id="popChart"></canvas></div>
+    <div class="card"><h2>Popularity by year</h2><canvas id="yearChart"></canvas></div>
+    <div class="card"><h2>Top artists</h2><div id="artistList"></div></div>
   </div>
+</section>
 
-  <div class="card">
-    <h2>Listening Activity</h2>
-    <canvas id="activityChart"></canvas>
+<!-- 2. MY LISTENING: real plays recorded by the player in this browser -->
+<section class="tab" id="tab-listening" hidden>
+  <p class="intro">Your own listening, recorded by the player in this browser. Play some songs on the home page and come back.</p>
+  <div class="stats">
+    <div class="stat-card"><p>Total plays</p><h2 id="lPlays">-</h2></div>
+    <div class="stat-card"><p>Different songs</p><h2 id="lUnique">-</h2></div>
+    <div class="stat-card"><p>Top artist</p><h2 id="lArtist">-</h2></div>
+    <div class="stat-card"><p>Top genre</p><h2 id="lGenre">-</h2></div>
   </div>
-
-  <div class="card">
-    <h2>Year Trend</h2>
-    <canvas id="yearChart"></canvas>
+  <div class="dashboard">
+    <div class="card"><h2>Most played songs</h2><canvas id="lSongs"></canvas></div>
+    <div class="card"><h2>Genres you listen to</h2><canvas id="lGenres"></canvas></div>
+    <div class="card"><h2>Plays by weekday</h2><canvas id="lDays"></canvas></div>
+    <div class="card"><h2>Recently played</h2><div id="lRecent"></div></div>
   </div>
+</section>
 
-  <div class="card">
-    <h2>Top Artists</h2>
-    <div id="artistList"></div>
+<!-- 3. WHAT MAKES A HIT: ML popularity prediction -->
+<section class="tab" id="tab-predict" hidden>
+  <p class="intro">A model learns from over a hundred thousand songs which audio features go with high popularity, then predicts popularity for songs it has never seen.</p>
+  <div class="stats">
+    <div class="stat-card"><p>Songs used</p><h2 id="mRows">-</h2></div>
+    <div class="stat-card"><p>Best model</p><h2 id="mBest">-</h2></div>
+    <div class="stat-card"><p>R&sup2; (test set)</p><h2 id="mR2">-</h2></div>
+    <div class="stat-card"><p>Error vs guessing the average</p><h2 id="mRmse">-</h2></div>
   </div>
+  <p class="note" id="mNote"></p>
+  <div class="dashboard">
+    <div class="card"><h2>Model comparison (R&sup2;)</h2><canvas id="modelChart"></canvas></div>
+    <div class="card"><h2>What drives popularity?</h2><canvas id="impChart"></canvas></div>
+    <div class="card wide"><h2>Actual vs predicted popularity</h2><canvas id="scatterChart"></canvas></div>
+  </div>
+</section>
 
-</div>
+<!-- 4. RECOMMENDER -->
+<section class="tab" id="tab-recommend" hidden>
+  <p class="intro">Pick a song and get the most similar ones, ranked by how close their audio features are (cosine similarity).</p>
+  <div class="dashboard"><div class="card wide">
+    <input id="q" list="songs" placeholder="Search a song..." autocomplete="off">
+    <datalist id="songs"></datalist>
+    <div id="recs"></div>
+  </div></div>
+</section>
 
-<script src="analyse.js"></script>
+<script src="songs.js"></script>
+<script src="insights.js"></script>
 </body>
 </html>

@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>A.Fm - Music Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
 
@@ -20,19 +21,20 @@
                 <img src = "unnamed.jpg" alt = "logo">
                 <p><b>A.Fm</b>&hearts;</p>
             </div>
-            <div class="home-icon"><i class="fa-solid fa-house"></i></div>
+            <div class="home-icon" id="homeBtn"><i class="fa-solid fa-house"></i></div>
              <div class="search-bar">
                 <div class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
                 <input type="text" id="searchInput" class="input-box" placeholder="What do you want to play?">
                 <!-- <input type="text" class = "input-box" placeholder="What do you want to play?"> -->
-                <div class="browse"><i class="fa-solid fa-window-restore"></i></div>
+                <div class="browse" id="browseIcon"><i class="fa-solid fa-window-restore"></i></div>
              </div>
         </div>
         <div class="right-half">
             <div class="right-half-p1">
                
-                <p class="nav-text">Download</p>
-                <p class="nav-text"><a href="analyse.html">Analyze</a></p>
+                <p class="nav-text" id="navPlaylists" style="cursor:pointer">Playlists</p>
+                <p class="nav-text" id="navDownload" style="cursor:pointer">Download</p>
+                <p class="nav-text"><a href="analyse.html">Insights</a></p>
                 <!-- <p class="nav-text">Analysis</p> -->
             </div>
             <div class="right-half-p2">
@@ -44,181 +46,44 @@
         </nav>
 
 <!-- main -->
-
-        <div class="main">
-            <div class="main-left-part">
-                <div class="library">
-                    <p>Your Library</p>
-                    <div>+</div>
-                </div>
-                <div class="box-container">
-                    <div class="box">
-                        <h4>Create your first playlist</h4>
-                        <p>It's easy we'll help you</p>
-                        <button>Create playlist</button>
-                    </div>
-                    <div class="box">
-                        <div class="box">
-                            <h4>Let's find some podcast to follow</h4>
-                            <p>We'll keep you updated on new updates</p>
-                            <button>Browse podcasts</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="main-right-part">
-
-               <p id="noResult" style="display:none; color:white; padding:10px;">❌ Song not found</p>
-
-                <div class="music-section">
-                
-                    <h2>Popular songs</h2>
-                    <div class="songs">
-                    <div class="music-card">
-                        <img src="images/3.jfif" alt="">
-                        <div class="music-play-btn"><i id="3" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">DIE FOR YOU</div>
-                        <div class="img-description">The Weeknd</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/4.jfif" alt="">
-                        <div class="music-play-btn"><i id="4" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">UNHOLY</div>
-                        <div class="img-description">Sam Smith,Kim Petras</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/5.jfif" alt="">
-                        <div class="music-play-btn"><i id="5" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">COLLIDE</div>
-                        <div class="img-description">Justine Skye,Tyga</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/6.jfif" alt="">
-                        <div class="music-play-btn"><i id="6" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">GOOD FOR YOU</div>
-                        <div class="img-description">Selene Gomez,A$AP Rocky</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/7.jfif" alt="">
-                        <div class="music-play-btn"><i id="7" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">MOCKINGBIRD</div>
-                        <div class="img-description">Eminem</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/8.jfif" alt="">
-                        <div class="music-play-btn"><i id="8" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">THE FATE OF OPHELIA</div>
-                        <div class="img-description">Taylor Swift</div>
-                    </div>
-                     <div class="music-card">
-                        <img src="Frontend/images/9.jfif" alt="">
-                        <div class="music-play-btn"><i id="9" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">NO ONE NOTICED</div>
-                        <div class="img-description">The Marias</div>
-                    </div>
-                     <div class="music-card">
-                        <img src="images/10.jfif" alt="">
-                        <div class="music-play-btn"><i id="10" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">WE CAN'T BE FRIENDS</div>
-                        <div class="img-description">Ariana Grande</div>
-                    </div>
-                     <div class="music-card">
-                        <img src="images/11.jfif" alt="">
-                        <div class="music-play-btn"><i id="11" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">IF YOU LOVE HER</div>
-                        <div class="img-description">Forest Blank</div>
-                    </div>
-                </div>
-            </div>
-             <div class="music-section">
-                
-                    <h2>Recomended songs</h2>
-                    <div class="songs">
-                    
-                    <div class="music-card">
-                        <img src="images/6.jfif" alt="">
-                        <div class="music-play-btn"><i id="6" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">GOOD FOR YOU</div>
-                        <div class="img-description">Selene Gomez,A$AP Rocky</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/7.jfif" alt="">
-                        <div class="music-play-btn"><i id="7" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">MOCKINGBIRD</div>
-                        <div class="img-description">Eminem</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/8.jfif" alt="">
-                        <div class="music-play-btn"><i id="8" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">THE FATE OF OPHELIA</div>
-                        <div class="img-description">Taylor Swift</div>
-                    </div>
-                     <div class="music-card">
-                        <img src="images/9.jfif" alt="">
-                        <div class="music-play-btn"><i id="9" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">NO ONE NOTICED</div>
-                        <div class="img-description">The Marias</div>
-                    </div>
-                     <div class="music-card">
-                        <img src="images/10.jfif" alt="">
-                        <div class="music-play-btn"><i id="10" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">WE CAN'T BE FRIENDS</div>
-                        <div class="img-description">Ariana Grande</div>
-                    </div>
-                </div>
-            </div>
-             <div class="music-section">
-                
-                    <h2>Download songs</h2>
-                    <div class="songs">
-                    <div class="music-card">
-                        <img src="images/3.jfif" alt="">
-                        <div class="music-play-btn"><i id="3" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">DIE FOR YOU</div>
-                        <div class="img-description">The Weeknd</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/4.jfif" alt="">
-                        <div class="music-play-btn"><i id="4" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">UNHOLY</div>
-                        <div class="img-description">Sam Smith,Kim Petras</div>
-                    </div>
-                    <div class="music-card">
-                        <img src="images/5.jfif" alt="">
-                        <div class="music-play-btn"><i id="5" class="playMusic fa-solid fa-circle-play"></i></div>
-                        <div class="img-title">COLLIDE</div>
-                        <div class="img-description">Justine Skye,Tyga</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-
-<!-- player --> 
-
-<div class="player-bar">
-<div class="now-bar"></div>
-   <img src="images/3.jfif" alt="">
-   <div class="music-card">  
-    <div>          
-   <div class="img-title-info">Song Name</div>
-   <div class="img-des-info">Artist Name</div>
+<div class="main">
+  <div class="main-left-part">
+    <div class="library"><p>Your Library</p><div id="libPlus" title="Create playlist">+</div></div>
+    <div id="playlists"></div>
+    <div class="box-container">
+      <div class="box"><h4>Create your first playlist</h4><p>It's easy, we'll help you</p><button id="createPl">Create playlist</button></div>
+      <div class="box"><h4>Find something new</h4><p>Browse songs by genre</p><button id="browseBtn">Browse genres</button></div>
     </div>
-    </div>
-<div class="music-controller">
+  </div>
+  <div class="main-right-part">
+    <p id="noResult" style="display:none;color:white;padding:10px;">&#10060; Song not found</p>
+    <div class="music-section" id="playlistSection" data-queue style="display:none"></div>
+    <div class="music-section" data-queue><h2>Popular songs</h2><div class="songs" id="popular"></div></div>
+    <div class="music-section" data-queue><h2 id="recTitle">Recommended for you</h2><div class="songs" id="recommended"></div></div>
+    <div class="music-section" id="genreSection"><h2>Browse by genre</h2><div class="chips" id="chips"></div></div>
+    <div class="music-section" id="downloadSection" data-queue><h2>Download songs</h2><div class="songs" id="downloads"></div></div>
+  </div>
+</div>
+
+<!-- player -->
+<div class="player-bar" id="playerBar">
+  <div class="pb-left"><img id="pbCover" src="unnamed.jpg" alt="">
+    <div><div class="img-title-info">Pick a song</div><div class="img-des-info">-</div></div></div>
+  <div class="pb-center">
     <div class="player">
-    <div id="shuffle"><i class="player-btns fa-solid fa-shuffle"></i></div>
-    <div id="backward"><i class="player-btns fa-solid fa-backward-step"></i></div>
-    <div ><i id="play" class="player-btns fa-solid fa-play"></i></div>
-    <div id="forward"><i class="player-btns fa-solid fa-forward-step"></i></div>
-    <div id="repeat"><i class="player-btns fa-solid fa-repeat"></i></div>
+      <div id="shuffle"><i class="player-btns fa-solid fa-shuffle" title="Shuffle"></i></div>
+      <div id="backward"><i class="player-btns fa-solid fa-backward-step"></i></div>
+      <div><i id="play" class="player-btns fa-solid fa-play"></i></div>
+      <div id="forward"><i class="player-btns fa-solid fa-forward-step"></i></div>
+      <div id="repeat" data-mode="0"><i class="player-btns fa-solid fa-repeat" title="Repeat"></i></div>
     </div>
-    <div>
-        <input type="range" id="progressBar" value="0">
-    </div>
+    <div class="pb-progress"><span id="curTime">0:00</span><input type="range" id="progressBar" value="0" min="0" max="100" step="0.1"><span id="durTime">0:00</span></div>
+  </div>
+  <div class="pb-right"><i class="fa-solid fa-volume-high"></i><input type="range" id="volume" min="0" max="1" step="0.01" value="0.8"></div>
 </div>
-</div>
-
+<div id="toast"></div>
+<script src="songs.js"></script>
 <script src="script.js"></script>
+<script src="auth-gate.js"></script>
 </body>
 </html>

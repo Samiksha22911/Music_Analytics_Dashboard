@@ -68,3 +68,36 @@ a{
   width: 0%;
   transition: width 1s ease;
 }
+
+/* RESPONSIVE */
+.card{min-width:0}
+@media (max-width:900px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .dashboard{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  .stats{grid-template-columns:1fr;padding:12px;gap:12px}
+  .dashboard{padding:12px;gap:12px}
+  h1{font-size:22px;padding:14px}
+  .card{padding:14px}
+  canvas{height:240px!important}
+}
+
+/* COMBINED INSIGHTS PAGE */
+.back{padding:0 20px}.back a{color:#22c55e}
+.tabs{display:flex;gap:8px;padding:10px 20px;flex-wrap:wrap}
+.tabs button{padding:10px 20px;border:0;border-radius:24px;background:#1e293b;color:#cbd5e1;cursor:pointer;font-size:15px}
+.tabs button.on{background:#22c55e;color:#04210f;font-weight:700}
+.tab{padding-bottom:30px}.tab[hidden]{display:none}
+.intro,.note{padding:0 20px;color:#94a3b8;line-height:1.5;margin:6px 0}
+.note{margin:10px 20px;padding:12px 16px;background:#1e293b;border-radius:10px}
+.card.wide{grid-column:1/-1}
+.card input{width:100%;padding:12px;border-radius:8px;border:none;background:#0f172a;color:#fff;box-sizing:border-box;margin-bottom:10px}
+.rec{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #334155}
+.muted{color:#94a3b8;font-size:14px}
+@media (max-width:480px){.tabs{padding:10px 12px}.tabs button{padding:8px 14px;font-size:14px}.intro,.note{padding-left:12px;padding-right:12px}.note{margin:10px 12px}}
+
+/* bigger, clearly visible back button */
+.back{text-align:center;margin:0 0 18px}
+.back a{display:inline-block;background:#22c55e;color:#0f172a;padding:12px 26px;border-radius:30px;font-size:17px;font-weight:700;text-decoration:none;transition:.2s}
+.back a:hover{background:#4ade80;transform:translateY(-1px)}
