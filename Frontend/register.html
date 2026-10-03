@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up - AFM Music Analytics</title>
+  <link rel="stylesheet" href="login.css">
+    <script src="config.js"></script>
+</head>
+<body>
+<div class="login-container"><div class="login-box">
+  <h1>Create account 🎧</h1>
+  <h2>Join AFM Music Analytics</h2>
+  <form id="regForm">
+    <div class="input-box"><label for="name">Name</label><input id="name" placeholder="Your name" required></div>
+    <div class="input-box"><label for="email">Email</label><input type="email" id="email" placeholder="Enter your email" required></div>
+    <div class="input-box"><label for="password">Password (min 6 characters)</label><input type="password" id="password" minlength="6" required></div>
+    <button type="submit" class="login-btn">Sign up</button>
+  </form>
+  <div class="extra-links"><p>Already have an account? <a href="login.html">Login</a></p></div>
+</div></div>
+<script>
+document.getElementById("regForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch(`${API_URL}/api/auth/register`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: name.value, email: email.value, password: password.value })
+    });
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      window.location.href = "index.html";
+    } else alert(data.message || "Registration failed");
+  } catch (err) { alert("Unable to connect to the server."); }
+});
+</script>
+</body>
+</html>
