@@ -2,19 +2,22 @@
 
 A full-stack music web app: stream songs with a custom player, log in with email or Google, build playlists, and explore your listening through an analytics dashboard with a machine-learning model that predicts what makes a song popular.
 
-**Live demo:** https://music-analytics-dashboard-teal.vercel.app &nbsp;|&nbsp; **API health check:** https://music-analytics-dashboard-ax3w.onrender.com/health
+**Live demo:** https://music-analytics-dashboard-teal.vercel.app  |  **API health check:** https://music-analytics-dashboard-ax3w.onrender.com/health
 
 > The free backend sleeps when idle, so the first request after a pause can take 30-60 seconds.
+
+## Screenshots
 
 | Player | Insights dashboard |
 |---|---|
 | ![Player](docs/screenshots/player-desktop.png) | ![Insights](docs/screenshots/insights-overview.png) |
 
-| Mobile | Login |
+| Mobile player | Login |
 |---|---|
 | <img src="docs/screenshots/player-mobile.png" width="260" alt="Mobile player"> | ![Login](docs/screenshots/login.png) |
 
 ## Why I built this
+
 I wanted one project that covers the whole path: a real web app with users and a database, the data work (cleaning, analysis, charts), and a machine-learning model that is trained, evaluated honestly and shown inside the product, instead of staying in a notebook.
 
 ## Features
@@ -37,24 +40,28 @@ I wanted one project that covers the whole path: a real web app with users and a
 - **Recommender:** pick a song and get similar songs by audio features
 
 ## Machine learning
-- **Data:** Kaggle *Spotify Tracks Dataset* (about 114k tracks with audio features and a popularity score)
+
+- **Data:** Kaggle Spotify Tracks Dataset (about 114k tracks with audio features and a popularity score); about 81k tracks remain after cleaning
 - **Cleaning:** drop missing values, remove duplicate tracks (the same song appears under many genres), filter invalid durations
 - **Task 1 - popularity regression:** Ridge Regression, Random Forest and Gradient Boosting, compared with a "predict the average" baseline using RMSE, MAE and R² on a held-out 20% test set
 - **Task 2 - recommender:** audio features are standardised and songs are ranked by cosine similarity; the similarity runs in the browser
 - **Output:** `ml_train.py` writes `ml_results.json`, which the dashboard reads (same pattern as `processing.py` -> `data.json`)
 
+### Results
+
 | Model | RMSE | MAE | R² |
 |---|---|---|---|
-| Baseline (predict mean) | _fill in_ | - | 0.00 |
-| Ridge Regression | _fill in_ | _fill in_ | _fill in_ |
-| Random Forest | _fill in_ | _fill in_ | _fill in_ |
-| Gradient Boosting | _fill in_ | _fill in_ | _fill in_ |
+| Baseline (predict mean) | 19.37 | - | 0.00 |
+| Ridge Regression | 18.76 | 15.36 | 0.06 |
+| **Random Forest** | **17.69** | **13.93** | **0.17** |
+| Gradient Boosting | 17.72 | 14.02 | 0.16 |
 
-**Takeaway:** _write 2-3 sentences after you run it: which model won and which features mattered most._
+**Takeaway:** Random Forest performed best (RMSE 17.69 vs 19.37 for the baseline), with Gradient Boosting almost tied and Ridge Regression clearly behind, which suggests the relationship between audio features and popularity is non-linear. The most important features were acousticness, instrumentalness and duration, followed by danceability, speechiness and valence.
 
-**Honest limitation:** audio features explain only part of a song's popularity. Artist fame, marketing and playlist placement are not in the data, so a modest R² is expected.
+**Honest limitation:** audio features explain only part of a song's popularity (the best model reaches R² of about 0.17). Artist fame, marketing and playlist placement are not in the data, so a modest R² is expected.
 
 ## Tech stack
+
 | Layer | Technology |
 |---|---|
 | Frontend | HTML, CSS, JavaScript (no framework), Chart.js |
@@ -64,16 +71,8 @@ I wanted one project that covers the whole path: a real web app with users and a
 | Data / ML | Python, pandas, scikit-learn |
 | Hosting | Vercel (frontend), Render (API), Aiven (MySQL) |
 
-## Architecture
-```mermaid
-flowchart LR
-  B[Browser<br/>HTML / CSS / JS] -->|REST + JWT| API[Express API]
-  API --> DB[(MySQL)]
-  B -->|reads| J[ml_results.json / data.json]
-  K[Kaggle CSV] --> T[ml_train.py<br/>pandas + scikit-learn] --> J
-```
-
 ## Project structure
+
 ```
 .
 ├── Frontend/
@@ -97,6 +96,7 @@ flowchart LR
 ```
 
 ## Run it locally
+
 You need Node.js 20+, MySQL (for example MySQL Workbench with a local server) and Python 3 for the ML part.
 
 ```bash
@@ -107,16 +107,19 @@ cp .env.example .env        # then fill in DB_USER, DB_PASSWORD, JWT_SECRET
 npm install
 npm start                   # http://localhost:5000  (also serves the frontend)
 ```
-Open **http://localhost:5000**. Tables are created automatically on start. Full walkthrough: [AUTH_SETUP.md](AUTH_SETUP.md).
+
+Open http://localhost:5000. Tables are created automatically on start. Full walkthrough: `AUTH_SETUP.md`.
 
 **ML results (optional):**
+
 ```bash
 pip install pandas scikit-learn numpy
 # download the Kaggle "Spotify Tracks Dataset" and save it as Frontend/spotify_tracks.csv
 cd Frontend && python ml_train.py     # creates ml_results.json
 ```
 
-### Environment variables (`backend/.env`)
+## Environment variables (`backend/.env`)
+
 | Variable | Purpose |
 |---|---|
 | `JWT_SECRET` | signs login tokens (required in production) |
@@ -126,6 +129,7 @@ cd Frontend && python ml_train.py     # creates ml_results.json
 | `FRONTEND_URL` | allowed origin when the frontend is on another domain |
 
 ## API
+
 All responses are JSON. Everything except register, login and Google needs `Authorization: Bearer <token>`.
 
 | Method and path | Description |
@@ -140,24 +144,29 @@ All responses are JSON. Everything except register, login and Google needs `Auth
 | `GET /api/analytics/summary` | totals, top songs and weekday counts (SQL aggregation) |
 
 ## Deployment
+
 - **Backend:** Render web service with root directory `backend`, plus the environment variables above
 - **Database:** cloud MySQL (Aiven or similar); the server creates the tables on first start
 - **Frontend:** Vercel (static); set `PROD_API_URL` in `Frontend/config.js` to the Render URL and add the Vercel URL to `FRONTEND_URL` on Render
-- Alternatively `render.yaml` deploys everything as one service. Step-by-step: [DEPLOY.md](DEPLOY.md)
+- Alternatively `render.yaml` deploys everything as one service. Step-by-step: `DEPLOY.md`
 
 ## Security
+
 - Passwords are stored only as bcrypt hashes; tokens are JWTs that expire after 7 days
 - Rate limiting on auth routes, CORS limited to the configured frontend, request size limits
 - All SQL uses parameterised queries; inputs are validated; users can only access their own playlists and history
 - Secrets live in environment variables and `.env` is git-ignored
 
 ## Limitations and next steps
+
 - The 60-second guest limit and the download lock are enforced in the browser; serving audio only to authenticated users would make them server-side
 - The song catalog is small and the Overview dataset has about 14 songs, so the Overview tab is a demo of the pipeline rather than a statistical study
 - Ideas: interactive "predict popularity" sliders backed by a small Python API, upload-your-own-CSV analysis, recommender evaluation (precision@k) against a most-popular baseline, automated tests
 
 ## Author
-**Samiksha Sharma** - Madhav Institute of Technology & Science, Gwalior (M.P.), INDIA
-Deemed University - [LinkedIn](https://www.linkedin.com/in/samiksha11sharma/?isSelfProfile=true) - [GitHub](https://github.com/Samiksha22911)
+
+**Samiksha Sharma** - Madhav Institute of Technology & Science, Gwalior (M.P.), INDIA Deemed University 
+[LinkedIn](https://www.linkedin.com/) 
+[GitHub](https://github.com/)
 
 *Song audio and cover art belong to their respective owners and are used here only to demonstrate the application. Remove them before reusing the project commercially.*
