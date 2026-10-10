@@ -10,11 +10,11 @@ A full-stack music web app: stream songs with a custom player, log in with email
 
 | Player | Insights dashboard |
 |---|---|
-| ![Player](docs/screenshots/player-desktop.png) | ![Insights](docs/screenshots/insights-overview.png) |
+| ![Player](docs/Screenshots/player-desktop.png) | ![Insights](docs/Screenshots/insights-overview.png) |
 
 | Mobile player | Login |
 |---|---|
-| <img src="docs/screenshots/player-mobile.png" width="260" alt="Mobile player"> | ![Login](docs/screenshots/login.png) |
+| <img src="docs/Screenshots/player-mobile.png" width="260" alt="Mobile player"> | ![Login](docs/Screenshots/login.png) |
 
 ## Why I built this
 
@@ -166,7 +166,7 @@ All responses are JSON. Everything except register, login and Google needs `Auth
 ## Author
 
 **Samiksha Sharma** - Madhav Institute of Technology & Science, Gwalior (M.P.), INDIA Deemed University 
-[LinkedIn](https://www.linkedin.com/) 
-[GitHub](https://github.com/)
+- [LinkedIn](https://www.linkedin.com/) 
+- [GitHub](https://github.com/)
 
 *Song audio and cover art belong to their respective owners and are used here only to demonstrate the application. Remove them before reusing the project commercially.*
