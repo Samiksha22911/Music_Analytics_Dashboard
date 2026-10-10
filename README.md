@@ -14,7 +14,7 @@ A full-stack music web app: stream songs with a custom player, log in with email
 
 | Mobile player | Login |
 |---|---|
-| <img src="docs/Screenshots/player-mobile.png" width="260" alt="Mobile player"> | ![Login](docs/Screenshots/login.png) |
+| <img src="docs/Screenshots/player-mobile.png" alt="Mobile player"> | ![Login](docs/Screenshots/login.png) |
 
 ## Why I built this
 
